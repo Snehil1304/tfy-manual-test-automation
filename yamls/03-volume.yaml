@@ -2,7 +2,7 @@ type: volume
 name: {{VOLUME_NAME}}
 config:
   type: dynamic
-  size: 1
+  size: 16
   storage_class: efs-sc
 workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
 volume_browser:
