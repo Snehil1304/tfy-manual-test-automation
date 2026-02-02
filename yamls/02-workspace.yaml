@@ -1,0 +1,11 @@
+type: workspace
+name: {{WORKSPACE_NAME}}
+cluster_fqn: {{CLUSTER_FQN}}
+environment_name: devtest
+collaborators:
+  - role_id: workspace-admin
+    subject: user:{{USER_EMAIL}}
+permissions:
+  - role_id: mlf-project-admin
+    resource_fqn: {{ML_REPO_NAME}}
+    resource_type: mlf-project
