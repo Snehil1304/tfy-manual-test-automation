@@ -1,0 +1,17 @@
+type: notebook
+name: testnotebook
+image:
+  image_uri: public.ecr.aws/truefoundrycloud/jupyter:0.4.5-py3.12.12-sudo
+home_directory_size: 20
+cull_timeout: 5
+workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
+resources:
+  node:
+    type: node_selector
+    capacity_type: spot_fallback_on_demand
+  cpu_request: 1
+  cpu_limit: 3
+  memory_request: 4000
+  memory_limit: 6000
+  ephemeral_storage_request: 5000
+  ephemeral_storage_limit: 10000
