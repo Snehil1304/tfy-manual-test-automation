@@ -1,0 +1,12 @@
+type: volume
+name: {{VOLUME_NAME}}
+config:
+  type: dynamic
+  size: 1
+  storage_class: efs-sc
+workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
+volume_browser:
+  endpoint:
+    host: {{VOLUME_NAME}}-{{WORKSPACE_NAME}}.{{BASE_DOMAIN}}
+  username: service
+  password_secret_fqn: {{PASSWORD_SECRET_FQN}}
