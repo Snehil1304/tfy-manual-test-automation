@@ -1,0 +1,7 @@
+type: ml-repo
+name: {{ML_REPO_NAME}}
+description: "Repository for experiments and model storage"
+storage_integration_fqn: {{STORAGE_FQN}}
+collaborators:
+  - subject: user:{{USER_EMAIL}}
+    role_id: mlf-project-admin
