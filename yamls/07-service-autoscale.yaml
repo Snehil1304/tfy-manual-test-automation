@@ -8,6 +8,7 @@ ports:
   - host: svc4-{{WORKSPACE_NAME}}.{{BASE_DOMAIN}}
     port: 8000
     expose: true
+    protocol: TCP
 workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
 replicas:
   min_replicas: 2
