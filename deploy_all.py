@@ -110,7 +110,7 @@ def main():
     infra_files = [
         "yamls/01-ml-repo.yaml",
         "yamls/02-workspace.yaml",
-        "yamls/03-volume.yaml",
+        #"yamls/03-volume.yaml",
     ]
 
     app_files = [
