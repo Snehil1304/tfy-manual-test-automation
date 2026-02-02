@@ -1,0 +1,41 @@
+type: service
+name: llama-7b-deployment
+image:
+  type: image
+  image_uri: vllm/vllm-openai:v0.6.3
+  command: >-
+    python3 -m vllm.entrypoints.openai.api_server
+    --model TinyLlama/TinyLlama-1.1B-Chat-v1.0
+    --gpu-memory-utilization 0.80
+    --max-model-len 2048
+ports:
+  - host: llama-{{WORKSPACE_NAME}}.{{BASE_DOMAIN}}
+    port: 8000
+    expose: true
+env:
+  HUGGING_FACE_HUB_TOKEN: {{HF_TOKEN}}
+workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
+replicas: 1
+auto_shutdown:
+  wait_time: 900
+mounts:
+  - type: volume
+    mount_path: /root/.cache/huggingface
+    volume_fqn: tfy-volume://{{CLUSTER_FQN}}:{{WORKSPACE_NAME}}:{{VOLUME_NAME}}
+labels:
+  tfy_openapi_path: openapi.json
+allow_interception: false
+resources:
+  node:
+    type: node_selector
+    capacity_type: spot_fallback_on_demand
+  devices:
+    - name: A10G
+      type: nvidia_gpu
+      count: 1
+  cpu_request: 2
+  cpu_limit: 4
+  memory_request: 32000
+  memory_limit: 48000
+  ephemeral_storage_request: 20000
+  ephemeral_storage_limit: 20000
