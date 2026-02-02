@@ -1,0 +1,49 @@
+type: service
+name: emotion-class-svc1
+image:
+  type: build
+  build_source:
+    type: git
+    repo_url: https://github.com/truefoundry/emotion-classification-fastapi
+    branch_name: main
+    ref: c4f7fce4d2e3fdec4ff3a6c7defec2293c763b48
+  build_spec:
+    type: tfy-python-buildpack
+    build_context_path: ./
+    command: >-
+      sh -c 'echo "--- SECRET PROOF ---";
+      echo "Value: $MY_SECRET";
+      echo "--- VOLUME PROOF ---";
+      ls /mnt/data;
+      uvicorn app:app --host 0.0.0.0 --port 8000'
+    python_version: "3.10"
+    python_dependencies:
+      type: pip
+      requirements_path: requirements.txt
+ports:
+  - host: svc1-{{WORKSPACE_NAME}}.{{BASE_DOMAIN}}
+    port: 8080
+    expose: true
+    protocol: TCP
+    app_protocol: http
+env:
+  MY_SECRET: {{MY_SECRET_VAL}}
+workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
+mounts:
+  - type: volume
+    mount_path: /mnt/data
+    volume_fqn: tfy-volume://{{CLUSTER_FQN}}:{{WORKSPACE_NAME}}:{{VOLUME_NAME}}
+replicas: 1
+labels:
+  tfy_openapi_path: openapi.json
+allow_interception: false
+resources:
+  node:
+    type: node_selector
+    capacity_type: spot_fallback_on_demand
+  cpu_request: 0.5
+  cpu_limit: 0.5
+  memory_request: 1000
+  memory_limit: 1000
+  ephemeral_storage_request: 500
+  ephemeral_storage_limit: 500
