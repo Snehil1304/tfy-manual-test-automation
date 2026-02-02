@@ -1,0 +1,30 @@
+type: service
+name: emotion-class-svc4
+image:
+  type: image
+  image_uri: public.ecr.aws/truefoundrycloud/emotion-classification:0.1.1
+  command: uvicorn app:app --host 0.0.0.0 --port 8000
+ports:
+  - host: svc4-{{WORKSPACE_NAME}}.{{BASE_DOMAIN}}
+    port: 8000
+    expose: true
+workspace_fqn: {{CLUSTER_FQN}}:{{WORKSPACE_NAME}}
+replicas:
+  min_replicas: 2
+  max_replicas: 5
+  metrics:
+    type: cpu_utilization
+    value: 50
+labels:
+  tfy_openapi_path: openapi.json
+allow_interception: false
+resources:
+  node:
+    type: node_selector
+    capacity_type: spot_fallback_on_demand
+  cpu_request: 0.5
+  cpu_limit: 0.5
+  memory_request: 1000
+  memory_limit: 1000
+  ephemeral_storage_request: 500
+  ephemeral_storage_limit: 500
