@@ -21,7 +21,7 @@ resources:
     type: node_selector
     capacity_type: spot_fallback_on_demand
   devices:
-    - name: A10G
+    - name: T4
       type: nvidia_gpu
       count: 1
   cpu_request: 2
